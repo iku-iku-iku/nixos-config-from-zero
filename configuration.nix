@@ -40,7 +40,7 @@
 	enable = true;
 	displayManager.gdm = {
 		enable = true;
-		wayland = true;
+		wayland = false;
 	};
 	desktopManager.gnome.enable = true;
   };
@@ -103,13 +103,6 @@
 	};
 
 	fish.enable = true;
-
-	hyprland = {
-	    # Install the packages from nixpkgs
-	    enable = true;
-	    # Whether to enable XWayland
-	    xwayland.enable = true;
-	};
   };
 
   # Some programs need SUID wrappers, can be configured further or are
