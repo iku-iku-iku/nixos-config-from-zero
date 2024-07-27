@@ -101,7 +101,15 @@
 	    fi
 	  '';
 	};
+
 	fish.enable = true;
+
+	hyprland = {
+	    # Install the packages from nixpkgs
+	    enable = true;
+	    # Whether to enable XWayland
+	    xwayland.enable = true;
+	};
   };
 
   # Some programs need SUID wrappers, can be configured further or are
