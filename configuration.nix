@@ -67,16 +67,18 @@
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.cute = {
-    isNormalUser = true;
-    home = "/home/cute";
-    password = "123456";
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      firefox
-      tree
-      kitty
-    ];
+  users = {
+	mutableUsers = true;
+	users.cute = {
+	    isNormalUser = true;
+	    home = "/home/cute";
+	    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+	    packages = with pkgs; [
+	      firefox
+	      tree
+	      kitty
+	    ];
+	};
   };
 
   # List packages installed in system profile. To search, run:
