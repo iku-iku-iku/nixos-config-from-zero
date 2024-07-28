@@ -26,6 +26,13 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
+  i18n.supportedLocales = [ "zh_CN.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" ];
+  i18n.defaultLocale = "zh_CN.UTF-8";
+  i18n.inputMethod = {
+	enable = true;
+	type = "fcitx5";
+	fcitx5.addons = with pkgs; [ fcitx5-rime ];
+  };
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
   # console = {
