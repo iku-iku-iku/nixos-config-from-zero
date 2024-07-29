@@ -47,6 +47,7 @@
 	displayManager.gdm = {
 		enable = true;
 		wayland = false;
+		autoSuspend = false;
 	};
 	desktopManager.gnome.enable = true;
   };
@@ -159,5 +160,19 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "24.05"; # Did you read the comment?
+
+  services.openssh = {
+	enable = true;
+	settings = { 
+		PasswordAuthentication = true;
+		KbdInteractiveAuthentication = true;
+		PermitRootLogin = "no";
+  	};
+  };
+  users.users."cute".openssh.authorizedKeys.keyFiles = [
+	/root/.ssh/authorized_key
+  ];
+
+  networking.firewall.allowedTCPPorts = [ 22 ];
 }
 
