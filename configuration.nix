@@ -91,6 +91,8 @@
 	      kitty
 	      clash-verge-rev
 	      neofetch
+	      htop
+	      lm_sensors
 	    ];
 	};
   };
