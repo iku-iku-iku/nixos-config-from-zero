@@ -105,6 +105,10 @@
     git
     fish
   ];
+  environment.shellAliases = {
+	vim = "nvim";
+	sudo = "sudo ";
+  };
 
   programs = {
 	bash = {
@@ -118,6 +122,14 @@
 	};
 
 	fish.enable = true;
+
+	nixvim = {
+	    enable = true;
+	    defaultEditor = true;
+	    extraPlugins = [ pkgs.vimPlugins.gruvbox ];
+	    colorschemes.gruvbox.enable = true;
+	    plugins.lightline.enable = true;
+        };
   };
 
   # Some programs need SUID wrappers, can be configured further or are

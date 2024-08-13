@@ -12,6 +12,13 @@
 
   # A flake in some absolute path
   # inputs.otherDir.url = "path:/home/alice/src/patchelf";
+  inputs.nixvim = {
+    url = "github:nix-community/nixvim";
+    # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
+    # url = "github:nix-community/nixvim/nixos-24.05";
+
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   # The nixpkgs entry in the flake registry.
   inputs.nixpkgsRegistry.url = "nixpkgs";
@@ -75,7 +82,16 @@
   # It is also possible to "inherit" an input from another input. This is useful to minimize
   # flake dependencies. For example, the following sets the nixpkgs input of the top-level flake
   # to be equal to the nixpkgs input of the nixops input of the top-level flake:
-  inputs.nixpkgs.url = "nixpkgs";
+  inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
+  inputs.home-manager = {
+      url = "github:nix-community/home-manager";
+      # The `follows` keyword in inputs is used for inheritance.
+      # Here, `inputs.nixpkgs` of home-manager is kept consistent with
+      # the `inputs.nixpkgs` of the current flake,
+      # to avoid problems caused by different versions of nixpkgs.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   inputs.nixpkgs.follows = "nixops/nixpkgs";
 
   # The value of the follows attribute is a sequence of input names denoting the path
@@ -97,7 +113,7 @@
   # Work-in-progress: refer to parent/sibling flakes in the same repository
   # inputs.c-hello.url = "path:../c-hello";
 
-  outputs = all@{ self, c-hello, rust-web-server, nixpkgs, nix-bundle, ... }: {
+  outputs = inputs@{ self, c-hello, rust-web-server, nixpkgs, nixvim, home-manager, nix-bundle, ... }: {
 
     # Utilized by `nix flake check`
     checks.x86_64-linux.test = c-hello.checks.x86_64-linux.test;
@@ -146,6 +162,18 @@
         # Import the previous configuration.nix we used,
         # so the old configuration file still takes effect
         ./configuration.nix
+	nixvim.nixosModules.nixvim
+	home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            # TODO replace cute with your own username
+            home-manager.users.cute = import ./home.nix;
+
+            # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+          }
+
       ];
     };
 
