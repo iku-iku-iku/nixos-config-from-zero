@@ -171,8 +171,8 @@
 		PermitRootLogin = "no";
   	};
   };
-  users.users."cute".openssh.authorizedKeys.keyFiles = [
-	/root/.ssh/authorized_key
+  users.users."cute".openssh.authorizedKeys.keys = [
+	"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDRxtbaL6CFAGEr6Evu8s0RwKO4VM63HwU7COST+qE7aj88jIstzm8tHsjCNdzJ91E/Zpye6lBn/24Pu2gFl66zxyXMPivCZbKyACCFEmpHLWUa8ALDjlxUM0ypA0CBhuGz7Vk4Dfb2GYJfLP1dU+PIAVA/3tJumPZ3VDTWa/ymgVEUc5NcnzO6R4vIxScEjcpCarKOvg77Hq3wBpnBQIUJUvfZnDqNBgFzuqs0hElZ+5jgP9w0zQJ30bUkdNYb6d0E0Wvav/3tFge0hrvnkYKr5z59n7yC2ATvg80Fb8IJXv7dAGcVAWXqHxim3HY6BH4+5XfTzM0E3fAAwZkeQ1YNihFcmfDQib9gtq8fM4EKAtg7NOQR4luxeQ4MJXLpAr0tTwO6FxAn8lYPjCN0e6f1aUtAHtCW3/B6w6mssl+dKbmaSiqDzVefuu54k2R8hWzp5zWH9IQm2nfGVyO+mTr0kxrTTF+cdaRVdWl7Hij6CwXINCiJqqeQ7HdVAzIiqLk= code4love@CODE"
   ];
 
   networking.firewall.allowedTCPPorts = [ 22 ];
