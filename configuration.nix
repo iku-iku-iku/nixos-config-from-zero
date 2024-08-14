@@ -1,14 +1,16 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ config, lib, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -17,7 +19,7 @@
   # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
@@ -26,12 +28,12 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  i18n.supportedLocales = [ "zh_CN.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" ];
+  i18n.supportedLocales = ["zh_CN.UTF-8/UTF-8" "en_US.UTF-8/UTF-8"];
   i18n.defaultLocale = "zh_CN.UTF-8";
   i18n.inputMethod = {
-	enable = true;
-	type = "fcitx5";
-	fcitx5.addons = with pkgs; [ fcitx5-rime ];
+    enable = true;
+    type = "fcitx5";
+    fcitx5.addons = with pkgs; [fcitx5-rime];
   };
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
@@ -43,21 +45,21 @@
 
   # Enable the X11 windowing system.
   services.xserver = {
-	enable = true;
-	displayManager.gdm = {
-		enable = true;
-		wayland = false;
-		autoSuspend = false;
-	};
-	desktopManager.gnome.enable = true;
+    enable = true;
+    displayManager.gdm = {
+      enable = true;
+      wayland = false;
+      autoSuspend = false;
+    };
+    desktopManager.gnome.enable = true;
   };
 
   services.keyd = {
-	enable = true;
-	keyboards.default = {
-		ids = [ "*" ];
-		settings.main.capslock = "overload(control, esc)";
-	};
+    enable = true;
+    keyboards.default = {
+      ids = ["*"];
+      settings.main.capslock = "overload(control, esc)";
+    };
   };
 
   # Configure keymap in X11
@@ -80,21 +82,21 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
-	mutableUsers = true;
-	users.cute = {
-	    isNormalUser = true;
-	    home = "/home/cute";
-	    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
-	    packages = with pkgs; [
-	      firefox
-	      tree
-	      kitty
-	      clash-verge-rev
-	      neofetch
-	      htop
-	      lm_sensors
-	    ];
-	};
+    mutableUsers = true;
+    users.cute = {
+      isNormalUser = true;
+      home = "/home/cute";
+      extraGroups = ["wheel" "networkmanager"]; # Enable ‘sudo’ for the user.
+      packages = with pkgs; [
+        firefox
+        tree
+        kitty
+        clash-verge-rev
+        neofetch
+        htop
+        lm_sensors
+      ];
+    };
   };
 
   # List packages installed in system profile. To search, run:
@@ -104,32 +106,27 @@
     wget
     git
     fish
+    alejandra
   ];
   environment.shellAliases = {
-	vim = "nvim";
-	sudo = "sudo ";
+    vim = "nvim";
+    sudo = "sudo ";
   };
 
   programs = {
-	bash = {
-	  interactiveShellInit = ''
-	    if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-	    then
-	      shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-	      exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
-	    fi
-	  '';
-	};
+    bash = {
+      interactiveShellInit = ''
+        if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+        then
+          shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+          exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+        fi
+      '';
+    };
 
-	fish.enable = true;
+    fish.enable = true;
 
-	nixvim = {
-	    enable = true;
-	    defaultEditor = true;
-	    extraPlugins = [ pkgs.vimPlugins.gruvbox ];
-	    colorschemes.gruvbox.enable = true;
-	    plugins.lightline.enable = true;
-        };
+    nixvim = import ./nixvim;
   };
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -176,24 +173,23 @@
   system.stateVersion = "24.05"; # Did you read the comment?
 
   services.openssh = {
-	enable = true;
-	settings = { 
-		PasswordAuthentication = true;
-		KbdInteractiveAuthentication = true;
-		PermitRootLogin = "no";
-  	};
+    enable = true;
+    settings = {
+      PasswordAuthentication = true;
+      KbdInteractiveAuthentication = true;
+      PermitRootLogin = "no";
+    };
   };
   users.users."cute".openssh.authorizedKeys.keys = [
-	"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDRxtbaL6CFAGEr6Evu8s0RwKO4VM63HwU7COST+qE7aj88jIstzm8tHsjCNdzJ91E/Zpye6lBn/24Pu2gFl66zxyXMPivCZbKyACCFEmpHLWUa8ALDjlxUM0ypA0CBhuGz7Vk4Dfb2GYJfLP1dU+PIAVA/3tJumPZ3VDTWa/ymgVEUc5NcnzO6R4vIxScEjcpCarKOvg77Hq3wBpnBQIUJUvfZnDqNBgFzuqs0hElZ+5jgP9w0zQJ30bUkdNYb6d0E0Wvav/3tFge0hrvnkYKr5z59n7yC2ATvg80Fb8IJXv7dAGcVAWXqHxim3HY6BH4+5XfTzM0E3fAAwZkeQ1YNihFcmfDQib9gtq8fM4EKAtg7NOQR4luxeQ4MJXLpAr0tTwO6FxAn8lYPjCN0e6f1aUtAHtCW3/B6w6mssl+dKbmaSiqDzVefuu54k2R8hWzp5zWH9IQm2nfGVyO+mTr0kxrTTF+cdaRVdWl7Hij6CwXINCiJqqeQ7HdVAzIiqLk= code4love@CODE"
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDRxtbaL6CFAGEr6Evu8s0RwKO4VM63HwU7COST+qE7aj88jIstzm8tHsjCNdzJ91E/Zpye6lBn/24Pu2gFl66zxyXMPivCZbKyACCFEmpHLWUa8ALDjlxUM0ypA0CBhuGz7Vk4Dfb2GYJfLP1dU+PIAVA/3tJumPZ3VDTWa/ymgVEUc5NcnzO6R4vIxScEjcpCarKOvg77Hq3wBpnBQIUJUvfZnDqNBgFzuqs0hElZ+5jgP9w0zQJ30bUkdNYb6d0E0Wvav/3tFge0hrvnkYKr5z59n7yC2ATvg80Fb8IJXv7dAGcVAWXqHxim3HY6BH4+5XfTzM0E3fAAwZkeQ1YNihFcmfDQib9gtq8fM4EKAtg7NOQR4luxeQ4MJXLpAr0tTwO6FxAn8lYPjCN0e6f1aUtAHtCW3/B6w6mssl+dKbmaSiqDzVefuu54k2R8hWzp5zWH9IQm2nfGVyO+mTr0kxrTTF+cdaRVdWl7Hij6CwXINCiJqqeQ7HdVAzIiqLk= code4love@CODE"
   ];
 
-  networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall.allowedTCPPorts = [22];
 
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
   # Enable the Flakes feature and the accompanying new nix command-line tool
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 }
-
