@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   # TODO please change the username & home directory to your own
   home.username = "cute";
   home.homeDirectory = "/home/cute";
@@ -50,12 +52,12 @@
     # networking tools
     mtr # A network diagnostic tool
     iperf3
-    dnsutils  # `dig` + `nslookup`
+    dnsutils # `dig` + `nslookup`
     ldns # replacement of `dig`, it provide the command `drill`
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
     socat # replacement of openbsd-netcat
     nmap # A utility for network discovery and security auditing
-    ipcalc  # it is a calculator for the IPv4/v6 addresses
+    ipcalc # it is a calculator for the IPv4/v6 addresses
 
     # misc
     cowsay
@@ -77,7 +79,7 @@
     # productivity
     glow # markdown previewer in terminal
 
-    btop  # replacement of htop/nmon
+    btop # replacement of htop/nmon
     iotop # io monitoring
     iftop # network monitoring
 
@@ -124,6 +126,21 @@
     # set some aliases, feel free to add more or remove some
     shellAliases = {
     };
+  };
+
+  programs.fish = {
+    enable = true;
+    shellInit = "zoxide init --cmd cd fish | source";
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = false;
+  };
+
+  programs.powerline-go = {
+    enable = true;
+    newline = true;
   };
 
   # This value determines the home Manager release that your

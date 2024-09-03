@@ -105,12 +105,14 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     git
-    fish
-    alejandra
+    fish # shell
+    alejandra # nix formatter
+    libgcc
   ];
   environment.shellAliases = {
     vim = "nvim";
     sudo = "sudo ";
+    sv = "sudo nvim";
   };
 
   programs = {

@@ -84,13 +84,13 @@
   # to be equal to the nixpkgs input of the nixops input of the top-level flake:
   inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
   inputs.home-manager = {
-      url = "github:nix-community/home-manager";
-      # The `follows` keyword in inputs is used for inheritance.
-      # Here, `inputs.nixpkgs` of home-manager is kept consistent with
-      # the `inputs.nixpkgs` of the current flake,
-      # to avoid problems caused by different versions of nixpkgs.
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    url = "github:nix-community/home-manager/release-24.05";
+    # The `follows` keyword in inputs is used for inheritance.
+    # Here, `inputs.nixpkgs` of home-manager is kept consistent with
+    # the `inputs.nixpkgs` of the current flake,
+    # to avoid problems caused by different versions of nixpkgs.
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   inputs.nixpkgs.follows = "nixops/nixpkgs";
 
@@ -113,8 +113,16 @@
   # Work-in-progress: refer to parent/sibling flakes in the same repository
   # inputs.c-hello.url = "path:../c-hello";
 
-  outputs = inputs@{ self, c-hello, rust-web-server, nixpkgs, nixvim, home-manager, nix-bundle, ... }: {
-
+  outputs = inputs @ {
+    self,
+    c-hello,
+    rust-web-server,
+    nixpkgs,
+    nixvim,
+    home-manager,
+    nix-bundle,
+    ...
+  }: {
     # Utilized by `nix flake check`
     checks.x86_64-linux.test = c-hello.checks.x86_64-linux.test;
 
@@ -143,16 +151,19 @@
     legacyPackages.x86_64-linux.hello = c-hello.defaultPackage.x86_64-linux;
 
     # Default overlay, for use in dependent flakes
-    overlay = final: prev: { };
+    overlay = final: prev: {};
 
     # # Same idea as overlay but a list or attrset of them.
-    overlays = { exampleOverlay = self.overlay; };
+    overlays = {exampleOverlay = self.overlay;};
 
     # Default module, for use in dependent flakes. Deprecated, use nixosModules.default instead.
-    nixosModule = { config, ... }: { options = {}; config = {}; };
+    nixosModule = {config, ...}: {
+      options = {};
+      config = {};
+    };
 
     # Same idea as nixosModule but a list or attrset of them.
-    nixosModules = { exampleModule = self.nixosModule; };
+    nixosModules = {exampleModule = self.nixosModule;};
 
     # Used with `nixos-rebuild --flake .#<hostname>`
     # nixosConfigurations."<hostname>".config.system.build.toplevel must be a derivation
@@ -162,18 +173,18 @@
         # Import the previous configuration.nix we used,
         # so the old configuration file still takes effect
         ./configuration.nix
-	nixvim.nixosModules.nixvim
-	home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
+        nixvim.nixosModules.nixvim
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
 
-            # TODO replace cute with your own username
-            home-manager.users.cute = import ./home.nix;
+          # TODO replace cute with your own username
+          home-manager.users.cute = import ./home.nix;
+          home-manager.backupFileExtension = "backup";
 
-            # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
-          }
-
+          # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+        }
       ];
     };
 
