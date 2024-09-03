@@ -13,9 +13,9 @@
   # A flake in some absolute path
   # inputs.otherDir.url = "path:/home/alice/src/patchelf";
   inputs.nixvim = {
-    url = "github:nix-community/nixvim";
+    # url = "github:nix-community/nixvim";
     # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
-    # url = "github:nix-community/nixvim/nixos-24.05";
+    url = "github:nix-community/nixvim/nixos-24.05";
 
     inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -73,16 +73,16 @@
   };
 
   # Transitive inputs can be overridden from a flake.nix file. For example, the following overrides the nixpkgs input of the nixops input:
-  inputs.nixops.inputs.nixpkgs = {
-    type = "github";
-    owner = "NixOS";
-    repo = "nixpkgs";
-  };
+  # inputs.nixops.inputs.nixpkgs = {
+  #   type = "github";
+  #   owner = "NixOS";
+  #   repo = "nixpkgs";
+  # };
 
   # It is also possible to "inherit" an input from another input. This is useful to minimize
   # flake dependencies. For example, the following sets the nixpkgs input of the top-level flake
   # to be equal to the nixpkgs input of the nixops input of the top-level flake:
-  inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "nixpkgs/nixos-24.05";
   inputs.home-manager = {
     url = "github:nix-community/home-manager/release-24.05";
     # The `follows` keyword in inputs is used for inheritance.
@@ -92,11 +92,11 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  inputs.nixpkgs.follows = "nixops/nixpkgs";
+  # inputs.nixpkgs.follows = "nixops/nixpkgs";
 
   # The value of the follows attribute is a sequence of input names denoting the path
   # of inputs to be followed from the root flake. Overrides and follows can be combined, e.g.
-  inputs.nixops.url = "nixops";
+  # inputs.nixops.url = "nixops";
   inputs.dwarffs.url = "dwarffs";
   inputs.dwarffs.inputs.nixpkgs.follows = "nixpkgs";
 
