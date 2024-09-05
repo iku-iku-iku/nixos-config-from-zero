@@ -1,6 +1,4 @@
 {
-  globals.mapleader = " ";
-
   keymaps = [
     {
       mode = "n";
@@ -55,7 +53,7 @@
     {
       mode = "n";
       key = "<leader>e";
-      action = ":Neotree toggle reveal_force_cwd<cr>";
+      action = "<cmd>Neotree toggle reveal_force_cwd<cr>";
       options = {
         silent = true;
         desc = "Explorer NeoTree (root dir)";
@@ -73,7 +71,7 @@
     {
       mode = "n";
       key = "<leader>be";
-      action = ":Neotree buffers<CR>";
+      action = "<cmd>Neotree buffers<CR>";
       options = {
         silent = true;
         desc = "Buffer explorer";
@@ -82,10 +80,37 @@
     {
       mode = "n";
       key = "<leader>ge";
-      action = ":Neotree git_status<CR>";
+      action = "<cmd>Neotree git_status<CR>";
       options = {
         silent = true;
         desc = "Git explorer";
+      };
+    }
+    {
+      mode = "n";
+      key = "<leader>`";
+      action = "<cmd>b#<CR>";
+      options = {
+        silent = true;
+        desc = "Switch to Other Buffer";
+      };
+    }
+    {
+      mode = "n";
+      key = "s";
+      action = "<cmd>lua require('flash').jump()<CR>";
+      options = {
+        silent = true;
+        desc = "flash jump";
+      };
+    }
+    {
+      key = "S";
+      mode = "n";
+      action = "<cmd>lua require('flash').treesitter()<CR>";
+      options = {
+        silent = true;
+        desc = "flash jump";
       };
     }
   ];
