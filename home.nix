@@ -43,6 +43,7 @@
     p7zip
 
     # utils
+    fd # A simple, fast and user-friendly alternative to find
     ripgrep # recursively searches directories for a regex pattern
     jq # A lightweight and flexible command-line JSON processor
     yq-go # yaml processor https://github.com/mikefarah/yq
@@ -94,6 +95,11 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+
+    tmux
+    xclip
+    appimage-run
+    zellij
   ];
 
   # basic configuration of git, please change to your own

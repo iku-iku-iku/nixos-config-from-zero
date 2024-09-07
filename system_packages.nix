@@ -5,5 +5,4 @@ with pkgs; [
   git
   fish # shell
   alejandra # nix formatter
-  libgcc
 ]

@@ -181,7 +181,6 @@
   gwtmv = "git worktree move";
   gwtrm = "git worktree remove";
   gcna = "git commit --amend --no-edit";
-  history = "omz_history";
   l = "ls -lah";
   la = "exa --icons --long --header --all";
   lg = "exa --icons --long --header --all --git";

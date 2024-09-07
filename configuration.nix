@@ -10,6 +10,10 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    (fetchTarball {
+      url = "https://github.com/nix-community/nixos-vscode-server/tarball/master";
+      sha256 = "1rq8mrlmbzpcbv9ys0x88alw30ks70jlmvnfr2j8v830yy5wvw7h";
+    })
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -182,4 +186,10 @@
   systemd.targets.hybrid-sleep.enable = false;
   # Enable the Flakes feature and the accompanying new nix command-line tool
   nix.settings.experimental-features = ["nix-command" "flakes"];
+
+  services.vscode-server.enable = lib.mkDefault true;
+  services.vscode-server.nodejsPackage = pkgs.nodejs-18_x;
+  services.vscode-server.extraRuntimeDependencies = lib.mkDefault [pkgs.curl];
+  services.vscode-server.enableFHS = lib.mkDefault true;
+  programs.nix-ld.enable = true;
 }
