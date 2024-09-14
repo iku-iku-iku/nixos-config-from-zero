@@ -190,4 +190,6 @@
   md = "mkdir -p";
   rd = "rmdir";
   tree = "exa --tree --icons";
+
+  nd = "nix develop";
 }

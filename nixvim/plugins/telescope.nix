@@ -1,11 +1,11 @@
 {
   plugins.telescope = {
     enable = true;
-    enabledExtensions = ["frecency"];
+    enabledExtensions = [];
     extensions = {
       ui-select.enable = true;
       frecency = {
-        enable = true;
+        enable = false;
         settings = {
           showUnindexed = true;
           show_scores = true;
